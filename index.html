@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atalaia Treinamentos - Brigada de Incêndio e Primeiros Socorros</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --vermelho: #C0281C;
+    --vermelho-escuro: #8B1A10;
+    --vermelho-claro: #FAEAEA;
+    --marinho: #1B2E4B;
+    --marinho-medio: #2C4A73;
+    --marinho-claro: #EEF2F7;
+    --cinza-escuro: #1B2E4B;
+    --cinza-medio: #2C4A73;
+    --cinza-texto: #4A5568;
+    --cinza-suave: #EEF2F7;
+    --branco: #fff;
+    --pagina: #F7F8FA;
+    --borda: #D0DAE8;
+    --fonte-display: 'Barlow Condensed', sans-serif;
+    --fonte-corpo: 'Inter', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--fonte-corpo); color: var(--cinza-escuro); background: var(--pagina); line-height: 1.6; font-size: 16px; }
+
+  img { max-width: 100%; display: block; }
+
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* BARRA TOPO */
+  .topbar {
+    background: var(--marinho);
+    color: #fff;
+    text-align: center;
+    font-size: 13px;
+    padding: 9px 16px;
+    letter-spacing: 0.02em;
+  }
+
+  /* HEADER/NAV */
+  .header {
+    background: var(--branco);
+    border-bottom: 1px solid var(--borda);
+    padding: 16px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--vermelho);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .logo-icon svg { width: 22px; height: 22px; fill: #fff; }
+  .logo-text { font-family: var(--fonte-display); font-size: 20px; font-weight: 700; letter-spacing: 0.03em; color: var(--cinza-escuro); line-height: 1; }
+  .logo-sub { font-size: 11px; color: var(--cinza-texto); letter-spacing: 0.06em; text-transform: uppercase; }
+  .header-cta {
+    background: var(--vermelho);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 22px;
+    border-radius: 6px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+  .header-cta:hover { background: var(--vermelho-escuro); }
+
+  /* HERO */
+  .hero {
+    background: var(--marinho);
+    color: #fff;
+    padding: 80px 0 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('[FOTO_HERO_TREINAMENTO]') center/cover no-repeat;
+    opacity: 0.18;
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--vermelho);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: var(--fonte-display);
+    font-size: clamp(36px, 6vw, 58px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: 0.01em;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .hero h1 span { color: var(--vermelho); }
+  .hero-sub {
+    font-size: 17px;
+    color: #CBD5E1;
+    max-width: 560px;
+    margin-bottom: 36px;
+    line-height: 1.6;
+  }
+  .hero-cta-group { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+  .btn-primary {
+    background: var(--vermelho);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 16px 32px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-primary:hover { background: var(--vermelho-escuro); transform: translateY(-1px); }
+  .hero-hint { font-size: 13px; color: #94A3B8; }
+
+  /* SELOS */
+  .selos {
+    background: var(--marinho-medio);
+    color: #fff;
+    padding: 20px 0;
+  }
+  .selos-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 32px;
+  }
+  .selo-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .selo-item svg { width: 22px; height: 22px; fill: rgba(255,255,255,0.85); flex-shrink: 0; }
+
+  /* SEÇÃO GENÉRICA */
+  section { padding: 72px 0; }
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--marinho-medio);
+    margin-bottom: 10px;
+  }
+  h2.section-title {
+    font-family: var(--fonte-display);
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    letter-spacing: 0.01em;
+  }
+  .section-desc { font-size: 16px; color: var(--cinza-texto); max-width: 560px; line-height: 1.7; margin-bottom: 40px; }
+
+  /* DOR */
+  .dor { background: var(--cinza-suave); }
+  .dor-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .dor-card {
+    background: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .dor-icon { flex-shrink: 0; color: var(--marinho-medio); font-size: 20px; }
+  .dor-card p { font-size: 14px; color: var(--cinza-medio); line-height: 1.55; }
+
+  /* SOLUÇÃO / SOBRE */
+  .sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .sobre-img-wrap {
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--cinza-suave);
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .img-placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .img-placeholder-label {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    background: rgba(0,0,0,0.55);
+    color: #fff;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+  }
+  .sobre-numeros { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px; }
+  .numero-card {
+    background: var(--marinho-claro);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .numero-valor { font-family: var(--fonte-display); font-size: 36px; font-weight: 700; color: var(--marinho); line-height: 1; }
+  .numero-label { font-size: 13px; color: var(--cinza-texto); margin-top: 4px; }
+
+  /* BENEFÍCIOS */
+  .beneficios { background: var(--marinho-claro); }
+  .benef-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .benef-card {
+    background: var(--branco);
+    border-radius: 10px;
+    padding: 24px;
+    border: 1px solid var(--borda);
+    position: relative;
+  }
+  .benef-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--marinho);
+    border-radius: 10px 10px 0 0;
+  }
+  .benef-icon {
+    font-size: 24px;
+    margin-bottom: 12px;
+    color: var(--marinho-medio);
+  }
+  .benef-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .benef-card p { font-size: 14px; color: var(--cinza-texto); line-height: 1.6; }
+
+  /* OFERTA */
+  .oferta { background: var(--marinho); color: #fff; }
+  .oferta .section-title { color: #fff; }
+  .oferta .section-desc { color: #94A3B8; }
+  .pacotes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .pacote-card {
+    background: var(--marinho-medio);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 28px 24px;
+  }
+  .pacote-horas {
+    font-family: var(--fonte-display);
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--vermelho);
+    line-height: 1;
+  }
+  .pacote-horas span { font-size: 20px; color: #94A3B8; }
+  .pacote-nome { font-size: 14px; font-weight: 600; color: #fff; margin: 8px 0 16px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .pacote-lista { list-style: none; }
+  .pacote-lista li {
+    font-size: 13px;
+    color: #CBD5E1;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .pacote-lista li:last-child { border-bottom: none; }
+  .check-icon { color: var(--vermelho); font-size: 14px; flex-shrink: 0; }
+  .oferta-cta { margin-top: 48px; text-align: center; }
+  .oferta-cta .btn-primary { font-size: 17px; padding: 18px 40px; }
+  .oferta-cta p { font-size: 13px; color: #64748B; margin-top: 12px; }
+
+  /* CLIENTES */
+  .clientes .section-title { text-align: center; }
+  .clientes .section-desc { text-align: center; margin: 0 auto 48px; }
+  .segmentos-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 48px; }
+  .segmento-pill {
+    background: var(--marinho-claro);
+    border: 1px solid var(--borda);
+    border-radius: 100px;
+    padding: 7px 18px;
+    font-size: 13px;
+    color: var(--marinho);
+    font-weight: 500;
+  }
+  .logo-mural {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  .logo-tag {
+    background: var(--marinho-claro);
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--marinho);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border: 1px solid var(--borda);
+  }
+
+  /* OBJEÇÕES */
+  .objecoes { background: var(--marinho-claro); }
+  .faq-lista { max-width: 720px; }
+  .faq-item {
+    background: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+  }
+  .faq-item h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; color: var(--cinza-escuro); }
+  .faq-item p { font-size: 14px; color: var(--cinza-texto); line-height: 1.65; }
+
+  /* GARANTIA */
+  .garantia {
+    background: var(--marinho-claro);
+    border-top: 3px solid var(--marinho);
+    padding: 64px 0;
+  }
+  .garantia-inner { display: flex; gap: 40px; align-items: center; max-width: 700px; }
+  .garantia-icon {
+    flex-shrink: 0;
+    width: 80px; height: 80px;
+    background: var(--marinho);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .garantia-icon svg { width: 38px; height: 38px; fill: #fff; }
+  .garantia-text h2 { font-family: var(--fonte-display); font-size: 28px; font-weight: 700; text-transform: uppercase; margin-bottom: 10px; color: var(--marinho); }
+  .garantia-text p { font-size: 15px; color: var(--cinza-texto); line-height: 1.65; }
+
+  /* CTA FINAL */
+  .cta-final {
+    background: var(--marinho);
+    color: #fff;
+    text-align: center;
+    padding: 88px 24px;
+  }
+  .cta-final h2 { font-family: var(--fonte-display); font-size: clamp(30px, 5vw, 48px); font-weight: 700; text-transform: uppercase; margin-bottom: 16px; line-height: 1.05; }
+  .cta-final p { font-size: 17px; color: rgba(255,255,255,0.8); max-width: 520px; margin: 0 auto 36px; }
+  .btn-branco {
+    background: var(--vermelho);
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    padding: 18px 40px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s;
+  }
+  .btn-branco:hover { background: var(--vermelho-escuro); }
+  .cta-final .cta-hint { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 16px; }
+
+  /* PS */
+  .ps-bloco {
+    background: #0F1E33;
+    color: #fff;
+    padding: 40px 24px;
+    text-align: center;
+  }
+  .ps-bloco p { font-size: 15px; color: #94A3B8; max-width: 640px; margin: 0 auto; line-height: 1.7; }
+  .ps-bloco strong { color: #fff; font-weight: 600; }
+
+  /* FOOTER */
+  .footer {
+    background: #0A1525;
+    color: #64748B;
+    text-align: center;
+    padding: 28px;
+    font-size: 13px;
+  }
+  .footer a { color: #94A3B8; text-decoration: none; }
+
+  /* FOTO HERO REAL */
+  .hero-foto-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .hero-foto-wrap img {
+    width: 100%; height: 100%; object-fit: cover; opacity: 0.18;
+  }
+
+  /* RESPONSIVO */
+  @media (max-width: 768px) {
+    .header-cta { display: none; }
+    .sobre-grid { grid-template-columns: 1fr; gap: 32px; }
+    .sobre-numeros { grid-template-columns: 1fr 1fr; }
+    .garantia-inner { flex-direction: column; gap: 24px; }
+    section { padding: 48px 0; }
+    .hero { padding: 56px 0 48px; }
+    .selos-grid { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- BARRA TOPO -->
+<div class="topbar">
+  Empresa credenciada pelo Corpo de Bombeiros Militar de SC para formação de brigadas em todo o estado
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="container">
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-icon">
+          <!-- LOGO [IMAGEM: logo-atalaia.png] -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c.83 0 1.5.67 1.5 1.5S12.83 8 12 8s-1.5-.67-1.5-1.5S11.17 5 12 5zm4 13H8v-1.5c0-1.33 2.67-2 4-2s4 .67 4 2V18z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="logo-text">Atalaia</div>
+          <div class="logo-sub">Treinamentos</div>
+        </div>
+      </div>
+      <a href="#contato" class="header-cta">Solicitar Orçamento</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-foto-wrap">
+    <!-- FOTO HERO [IMAGEM: hero-treinamento.jpg] -->
+  </div>
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-badge">Credenciado pelo CBMSC</div>
+      <h1>Sua equipe preparada.<br><span>Sua empresa protegida.</span></h1>
+      <p class="hero-sub">
+        Treinamentos de Brigada de Incêndio e Primeiros Socorros ministrados por quem passou 32 anos na linha de frente como Bombeiro Militar.
+      </p>
+      <div class="hero-cta-group">
+        <a href="#contato" class="btn-primary">Solicitar Orçamento Gratuito</a>
+        <span class="hero-hint">Atendemos em todo o estado de Santa Catarina</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SELOS -->
+<div class="selos">
+  <div class="container">
+    <div class="selos-grid">
+      <div class="selo-item">
+        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+        Credenciado pelo CBMSC
+      </div>
+      <div class="selo-item">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.31-8.86c-1.77-.45-2.34-.94-2.34-1.67 0-.84.79-1.43 2.1-1.43 1.38 0 1.9.66 1.94 1.64h1.71c-.05-1.34-.87-2.57-2.49-2.97V5H10.9v1.69c-1.51.32-2.72 1.3-2.72 2.81 0 1.79 1.49 2.69 3.66 3.21 1.95.46 2.34 1.15 2.34 1.87 0 .53-.39 1.39-2.1 1.39-1.6 0-2.23-.72-2.32-1.64H8.04c.1 1.7 1.36 2.66 2.86 2.97V19h2.34v-1.67c1.52-.29 2.72-1.16 2.73-2.77-.01-2.2-1.9-2.96-3.66-3.42z"/></svg>
+        Conforme NRs vigentes
+      </div>
+      <div class="selo-item">
+        <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        +80 empresas treinadas
+      </div>
+      <div class="selo-item">
+        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        Florianópolis, Grande Florianópolis, Vale do Itajaí e todo SC
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DOR -->
+<section class="dor">
+  <div class="container">
+    <p class="section-label">Você reconhece esse cenário?</p>
+    <h2 class="section-title">O problema que nenhuma empresa<br>pode ignorar</h2>
+    <p class="section-desc">Acidentes não avisam quando vão acontecer. Mas a falta de preparo faz toda a diferença entre uma ocorrência controlada e uma tragédia.</p>
+    <div class="dor-grid">
+      <div class="dor-card">
+        <div class="dor-icon">&#9888;</div>
+        <p>Sua empresa precisa estar em conformidade com as NRs e as normas do Corpo de Bombeiros, mas não sabe por onde começar.</p>
+      </div>
+      <div class="dor-card">
+        <div class="dor-icon">&#9888;</div>
+        <p>Você já passou por auditorias ou fiscalizações e sabe que a brigada precisa ser qualificada e documentada.</p>
+      </div>
+      <div class="dor-card">
+        <div class="dor-icon">&#9888;</div>
+        <p>Seus colaboradores não sabem como agir em uma emergência com fogo ou com um colega passando mal.</p>
+      </div>
+      <div class="dor-card">
+        <div class="dor-icon">&#9888;</div>
+        <p>Treinamentos genéricos não refletem a realidade do seu ambiente de trabalho e os funcionários não absorvem o conteúdo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUÇÃO / SOBRE O INSTRUTOR -->
+<section class="sobre">
+  <div class="container">
+    <div class="sobre-grid">
+      <div class="sobre-img-wrap">
+        <!-- FOTO INSTRUTOR [IMAGEM: henrique-instrutor.jpg] -->
+        <div style="width:100%;height:100%;background:var(--cinza-suave);display:flex;align-items:center;justify-content:center;">
+          <p style="font-size:13px;color:#999;text-align:center;padding:24px;">[IMAGEM: henrique-instrutor.jpg]</p>
+        </div>
+        <div class="img-placeholder-label">Sgt. Henrique Osni de Jesus</div>
+      </div>
+      <div>
+        <p class="section-label">Por que a Atalaia é diferente</p>
+        <h2 class="section-title">Conhecimento que vem<br>de 32 anos na linha de frente</h2>
+        <p style="font-size:16px;color:var(--cinza-texto);line-height:1.7;margin-bottom:24px;">
+          O instrutor da Atalaia Treinamentos não aprendeu emergências em sala de aula. Ele passou mais de três décadas como Sargento do Corpo de Bombeiros Militar de SC, atuando em ocorrências reais e formando equipes de resposta.
+        </p>
+        <p style="font-size:16px;color:var(--cinza-texto);line-height:1.7;margin-bottom:32px;">
+          Hoje, credenciado pelo CBMSC como Instrutor de Brigada de Incêndio e com pós-graduação em Docência do Ensino Superior, ele transforma essa experiência prática em treinamentos que realmente preparam sua equipe para responder com rapidez, segurança e eficácia.
+        </p>
+        <div class="sobre-numeros">
+          <div class="numero-card">
+            <div class="numero-valor">32<span style="font-size:18px;color:var(--vermelho)">+</span></div>
+            <div class="numero-label">anos de experiência como Bombeiro Militar</div>
+          </div>
+          <div class="numero-card">
+            <div class="numero-valor">80<span style="font-size:18px;color:var(--vermelho)">+</span></div>
+            <div class="numero-label">empresas treinadas em SC</div>
+          </div>
+          <div class="numero-card">
+            <div class="numero-valor">100<span style="font-size:14px;color:var(--vermelho)">%</span></div>
+            <div class="numero-label">conforme NRs e normas do CBMSC</div>
+          </div>
+          <div class="numero-card">
+            <div class="numero-valor">3</div>
+            <div class="numero-label">formatos de carga horária disponíveis</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFÍCIOS -->
+<section class="beneficios">
+  <div class="container">
+    <p class="section-label">O que sua empresa ganha</p>
+    <h2 class="section-title">Equipe pronta. Empresa segura.<br>Conformidade garantida.</h2>
+    <div class="benef-grid">
+      <div class="benef-card">
+        <div class="benef-icon">&#128293;</div>
+        <h3>Treinamento credenciado pelo CBMSC</h3>
+        <p>Sua brigada formada com certificação oficial, reconhecida nas fiscalizações e auditorias do Corpo de Bombeiros e órgãos reguladores.</p>
+      </div>
+      <div class="benef-card">
+        <div class="benef-icon">&#128203;</div>
+        <h3>Conteúdo adaptado à sua realidade</h3>
+        <p>O material e os cenários do treinamento são preparados especificamente para o perfil de risco da sua empresa, não um roteiro genérico copiado de outro lugar.</p>
+      </div>
+      <div class="benef-card">
+        <div class="benef-icon">&#128337;</div>
+        <h3>Flexibilidade de horário e formato</h3>
+        <p>Treinamentos de 8, 16 ou 40 horas, realizáveis em dias úteis, fins de semana ou contra-turno, para não afetar a operação da sua empresa.</p>
+      </div>
+      <div class="benef-card">
+        <div class="benef-icon">&#128521;</div>
+        <h3>Didática que engaja e que fica</h3>
+        <p>Com formação em Docência do Ensino Superior e décadas de prática, o instrutor sabe como transformar conteúdo técnico em aprendizado real e duradouro.</p>
+      </div>
+      <div class="benef-card">
+        <div class="benef-icon">&#127973;</div>
+        <h3>Primeiros socorros para o dia a dia</h3>
+        <p>Seus colaboradores aprendem a salvar uma vida, dentro ou fora do trabalho. Conhecimento que vai além do ambiente corporativo.</p>
+      </div>
+      <div class="benef-card">
+        <div class="benef-icon">&#128640;</div>
+        <h3>Cobertura em todo o estado de SC</h3>
+        <p>Florianópolis, Blumenau, Gaspar, Brusque, Itajaí, Balneário Camboriú e demais regiões de Santa Catarina.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFERTA / PACOTES -->
+<section class="oferta" id="pacotes">
+  <div class="container">
+    <p class="section-label" style="color:rgba(255,255,255,0.6);">Modalidades disponíveis</p>
+    <h2 class="section-title">Escolha o formato<br>ideal para sua empresa</h2>
+    <p class="section-desc">Todos os treinamentos seguem as normas vigentes do Corpo de Bombeiros e NRs. O conteúdo é personalizado para cada contratante.</p>
+    <div class="pacotes-grid">
+      <div class="pacote-card">
+        <div class="pacote-horas">8<span>h</span></div>
+        <div class="pacote-nome">Treinamento Essencial</div>
+        <ul class="pacote-lista">
+          <li><span class="check-icon">&#10003;</span> Noções de combate a incêndio</li>
+          <li><span class="check-icon">&#10003;</span> Uso correto de extintores</li>
+          <li><span class="check-icon">&#10003;</span> Procedimentos de evacuação</li>
+          <li><span class="check-icon">&#10003;</span> Material didático incluído</li>
+          <li><span class="check-icon">&#10003;</span> Certificado de participação</li>
+        </ul>
+      </div>
+      <div class="pacote-card" style="border-color: var(--vermelho);">
+        <div style="display:inline-block;background:var(--vermelho);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:4px;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Mais procurado</div>
+        <div class="pacote-horas">16<span>h</span></div>
+        <div class="pacote-nome">Brigada Completa</div>
+        <ul class="pacote-lista">
+          <li><span class="check-icon">&#10003;</span> Formação completa de brigada</li>
+          <li><span class="check-icon">&#10003;</span> Primeiros socorros básicos</li>
+          <li><span class="check-icon">&#10003;</span> Combate e controle de incêndio</li>
+          <li><span class="check-icon">&#10003;</span> Simulações práticas</li>
+          <li><span class="check-icon">&#10003;</span> Certificado credenciado CBMSC</li>
+          <li><span class="check-icon">&#10003;</span> Material personalizado</li>
+        </ul>
+      </div>
+      <div class="pacote-card">
+        <div class="pacote-horas">40<span>h</span></div>
+        <div class="pacote-nome">Especialização Avançada</div>
+        <ul class="pacote-lista">
+          <li><span class="check-icon">&#10003;</span> Formação aprofundada de brigada</li>
+          <li><span class="check-icon">&#10003;</span> Atendimento pré-hospitalar</li>
+          <li><span class="check-icon">&#10003;</span> Gestão de emergências</li>
+          <li><span class="check-icon">&#10003;</span> Simulações avançadas</li>
+          <li><span class="check-icon">&#10003;</span> Certificado credenciado CBMSC</li>
+          <li><span class="check-icon">&#10003;</span> Ideal para hospitais, indústrias e logística</li>
+        </ul>
+      </div>
+    </div>
+    <div class="oferta-cta" id="contato">
+      <a href="https://wa.me/5548991462190?text=Olá,%20gostaria%20de%20solicitar%20um%20orçamento%20para%20treinamento%20da%20Atalaia%20Treinamentos" class="btn-primary">Solicitar Orçamento no WhatsApp</a>
+      <p>Resposta rápida. Sem compromisso. O orçamento é gratuito.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTES -->
+<section class="clientes">
+  <div class="container">
+    <p class="section-label" style="text-align:center;">Quem já confia na Atalaia</p>
+    <h2 class="section-title">Mais de 80 empresas<br>treinadas em SC</h2>
+    <p class="section-desc">De hospitais a indústrias, de escolas a grandes operações logísticas. A Atalaia forma brigadas em empresas de todos os portes e segmentos.</p>
+
+    <div class="segmentos-grid">
+      <div class="segmento-pill">Logística e Transporte</div>
+      <div class="segmento-pill">Saúde</div>
+      <div class="segmento-pill">Educação</div>
+      <div class="segmento-pill">Energia</div>
+      <div class="segmento-pill">Hotelaria</div>
+      <div class="segmento-pill">Indústria</div>
+      <div class="segmento-pill">Varejo</div>
+      <div class="segmento-pill">Tecnologia</div>
+    </div>
+
+    <div class="logo-mural">
+      <div class="logo-tag">Coopercarga</div>
+      <div class="logo-tag">SENAC</div>
+      <div class="logo-tag">Engie</div>
+      <div class="logo-tag">Eletrosul</div>
+      <div class="logo-tag">Hospital Biguaçu</div>
+      <div class="logo-tag">FM Logística</div>
+      <div class="logo-tag">Braspress</div>
+      <div class="logo-tag">Intercity Hotel</div>
+      <div class="logo-tag">Sabin</div>
+      <div class="logo-tag">Van Hessen</div>
+      <div class="logo-tag">Navilog</div>
+      <div class="logo-tag">Logomar</div>
+      <div class="logo-tag">Certi</div>
+      <div class="logo-tag">Lisa Log</div>
+      <div class="logo-tag">Eurotec</div>
+      <div class="logo-tag">Porto Express</div>
+      <div class="logo-tag">Dominalog</div>
+      <div class="logo-tag">BrasiPort</div>
+      <div class="logo-tag">Perfil Medicina</div>
+      <div class="logo-tag">+ dezenas de outras</div>
+    </div>
+
+    <!-- DEPOIMENTOS -->
+    <div style="margin-top:56px;">
+      <p class="section-label">O que dizem sobre os treinamentos</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-top:24px;">
+        <div style="background:var(--marinho-claro);border-radius:10px;padding:24px;border:1px solid var(--borda);">
+          <p style="font-size:14px;color:var(--cinza-texto);line-height:1.7;margin-bottom:16px;">"[INSERIR DEPOIMENTO 1 - foco no resultado prático e no preparo da equipe]"</p>
+          <p style="font-size:13px;font-weight:600;color:var(--marinho);">[Nome] - [Cargo], [Empresa]</p>
+        </div>
+        <div style="background:var(--marinho-claro);border-radius:10px;padding:24px;border:1px solid var(--borda);">
+          <p style="font-size:14px;color:var(--cinza-texto);line-height:1.7;margin-bottom:16px;">"[INSERIR DEPOIMENTO 2 - foco na didática do instrutor e na experiência prática]"</p>
+          <p style="font-size:13px;font-weight:600;color:var(--marinho);">[Nome] - [Cargo], [Empresa]</p>
+        </div>
+        <div style="background:var(--marinho-claro);border-radius:10px;padding:24px;border:1px solid var(--borda);">
+          <p style="font-size:14px;color:var(--cinza-texto);line-height:1.7;margin-bottom:16px;">"[INSERIR DEPOIMENTO 3 - foco na conformidade com normas ou aprovação em fiscalização]"</p>
+          <p style="font-size:13px;font-weight:600;color:var(--marinho);">[Nome] - [Cargo], [Empresa]</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OBJEÇÕES / FAQ -->
+<section class="objecoes">
+  <div class="container">
+    <p class="section-label">Dúvidas frequentes</p>
+    <h2 class="section-title">Antes de decidir,<br>veja as respostas mais comuns</h2>
+    <div class="faq-lista">
+      <div class="faq-item">
+        <h3>A empresa precisa parar as atividades para o treinamento?</h3>
+        <p>Não. Os treinamentos podem ser realizados em fins de semana, contra-turno ou fora do horário de pico. A Atalaia adapta o calendário à realidade operacional de cada empresa.</p>
+      </div>
+      <div class="faq-item">
+        <h3>O certificado é aceito pelo Corpo de Bombeiros e órgãos fiscalizadores?</h3>
+        <p>Sim. A Atalaia é empresa credenciada pelo Corpo de Bombeiros Militar de SC para formação de brigadas. Os certificados emitidos são reconhecidos nas fiscalizações e na documentação de PPCI.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Empresas pequenas também podem contratar?</h3>
+        <p>Sim. A Atalaia atende empresas de todos os portes. O treinamento é dimensionado conforme o número de colaboradores e o perfil de risco do seu negócio.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Qual a diferença entre os treinamentos de 8, 16 e 40 horas?</h3>
+        <p>A carga horária determina a profundidade do conteúdo e o nível de habilitação da brigada. O treinamento ideal depende do porte da empresa, do nível de risco e dos requisitos normativos aplicáveis. Consultamos cada caso antes de recomendar.</p>
+      </div>
+      <div class="faq-item">
+        <h3>O conteúdo é o mesmo para todo tipo de empresa?</h3>
+        <p>Não. O material é preparado especificamente para cada contratante, levando em conta o ambiente de trabalho, os riscos presentes e a realidade dos colaboradores. Esse é um dos principais diferenciais da Atalaia.</p>
+      </div>
+      <div class="faq-item">
+        <h3>A Atalaia atende em qual região de SC?</h3>
+        <p>Atendemos em todo o estado de Santa Catarina. Com maior frequência em Florianópolis, Grande Florianópolis, Itajaí, Balneário Camboriú, Blumenau, Gaspar e Brusque, mas também em outras regiões mediante agendamento.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GARANTIA -->
+<section class="garantia">
+  <div class="container">
+    <div class="garantia-inner">
+      <div class="garantia-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+      </div>
+      <div class="garantia-text">
+        <h2>Conformidade garantida ou refazemos</h2>
+        <p>Se após o treinamento sua empresa não estiver em conformidade com as normas aplicáveis por falha do conteúdo ministrado, a Atalaia refaz o treinamento sem custo adicional. Trabalhamos com responsabilidade e compromisso com o resultado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <h2>Não espere a emergência<br>para se preparar</h2>
+  <p>Solicite agora um orçamento sem compromisso. Em poucos minutos você tem uma proposta personalizada para a sua empresa.</p>
+  <a href="https://wa.me/5548991462190?text=Olá,%20gostaria%20de%20solicitar%20um%20orçamento%20para%20treinamento%20da%20Atalaia%20Treinamentos" class="btn-branco">Falar com a Atalaia no WhatsApp</a>
+  <p class="cta-hint">Atendimento rápido. Orçamento gratuito. Sem burocracia.</p>
+</section>
+
+<!-- PS -->
+<div class="ps-bloco">
+  <div class="container">
+    <p><strong>P.S.</strong> A brigada de incêndio é obrigatória por lei para a maioria das empresas. A diferença entre uma equipe treinada de verdade e uma equipe com papel na gaveta se mostra no momento que ninguém quer precisar. A Atalaia existe para garantir que, quando esse momento chegar, sua equipe esteja pronta.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <p>Atalaia Treinamentos - Credenciada pelo CBMSC - Florianópolis, SC</p>
+    <p style="margin-top:6px;"><a href="#">Política de Privacidade</a> | CNPJ: [INSERIR CNPJ]</p>
+  </div>
+</footer>
+
+</body>
+</html>
